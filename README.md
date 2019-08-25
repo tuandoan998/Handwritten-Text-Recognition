@@ -2,7 +2,8 @@
 This project refers to the handwritten recognition with CNN and RNN, decode with CTC.
 
 ### Dataset
-IAM dataset
+IAM dataset.
+
 Train in word unit
 
 ### Model
