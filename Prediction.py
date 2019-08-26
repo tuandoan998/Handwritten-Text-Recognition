@@ -8,6 +8,7 @@ from Preprocessor import preprocess
 from keras.models import model_from_json
 import shutil
 from keras import backend as K
+from keras.utils import plot_model
 
 
 def pred_word(model_predict, path):
@@ -41,6 +42,7 @@ if __name__=='__main__':
 
 	with open('model_predict.json', 'r') as f:
 		model_predict = model_from_json(f.read())
+	#plot_model(model_predict, to_file='model.png', show_shapes=True, show_layer_names=True)
 	model_predict.load_weights('iam_words--15--1.791.h5')
 
 	test_img = 'test_img/1.png'
