@@ -1,5 +1,5 @@
 from Parameter import *
-from Utilts import *
+from Utils import *
 from CRNN_Model import CRNN_model
 from ImageGenerator import TextImageGenerator
 from sklearn.model_selection import train_test_split
@@ -9,6 +9,9 @@ import editdistance
 
 sess = tf.Session()
 K.set_session(sess)
+
+def F_score(p, r):
+	return float(2*p*r)/(p+r)
 
 if __name__=='__main__':
 	paths_and_texts = get_paths_and_texts()
@@ -29,8 +32,7 @@ if __name__=='__main__':
 	net_inp = model.get_layer(name='the_input').input
 	net_out = model.get_layer(name='softmax').output
 
-	ed_chars = 0
-	num_chars = 0
+	ed_chars = num_chars_gt = num_chars_pred = 0
 	ed_words = num_words = 0
 	batch = 0
 	num_batch = int(test_set.n/32)
@@ -45,18 +47,25 @@ if __name__=='__main__':
 		pred_texts = decode_batch(net_out_value)
 		labels = inp_value['the_labels']
 		label_len = inp_value['label_length']
-		g_texts = []
+		gt_texts = []
 		for label in labels:
-			g_text = ''.join(list(map(lambda x: letters[int(x)], label)))
-			g_texts.append(g_text)
+			gt_text = ''.join(list(map(lambda x: letters[int(x)], label)))
+			gt_texts.append(gt_text)
 
 		for i in range(bs):
-			g_texts[i] = g_texts[i][:int(inp_value['label_length'].item(i))]
-			ed_chars += editdistance.eval(g_texts[i], pred_texts[i])
-			if g_texts[i]!=pred_texts[i]:
+			gt_texts[i] = gt_texts[i][:int(inp_value['label_length'].item(i))]
+			ed_chars += editdistance.eval(gt_texts[i], pred_texts[i])
+			if gt_texts[i]!=pred_texts[i]:
 				ed_words += 1
-			num_chars += len(g_texts[i])
+			num_chars_gt += len(gt_texts[i])
+			num_chars_pred += len(pred_texts[i])
 			num_words += 1
 	
-	print('CER: ', ed_chars / num_chars)
+	num_chars_correct = num_chars_gt - ed_chars
+	micro_ap = float(num_chars_correct)/num_chars_pred
+	micro_ar = float(num_chars_correct)/num_chars_gt
+	print('CER: ', ed_chars / num_chars_gt)
 	print('WER: ', ed_words / num_words)
+	print('Micro-average precision: ', micro_ap)
+	print('Micro-average recall: ', micro_ar)
+	print('F-score: ', F_score(micro_ap, micro_ar))

@@ -26,7 +26,7 @@ def decode_batch(out):
 
 def get_paths_and_texts():
     paths_and_texts = []
-    with open('IAM_words/words.txt') as f:
+    with open('../IAM_words/words.txt') as f:
         for line in f:
             if not line or line.startswith('#'):
                 continue
@@ -40,7 +40,7 @@ def get_paths_and_texts():
             label_dir = file_name_split[0]
             sub_label_dir = '{}-{}'.format(file_name_split[0], file_name_split[1])
             fn = '{}.png'.format(line_split[0])
-            img_path = os.path.join('IAM_words/words', label_dir, sub_label_dir, fn)
+            img_path = os.path.join('../IAM_words/words', label_dir, sub_label_dir, fn)
 
             gt_text = ' '.join(line_split[8:])
 

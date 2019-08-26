@@ -1,5 +1,5 @@
 import numpy as np
-from Utilts import *
+from Utils import *
 from WordSegmentation import wordSegmentation, prepareImg
 import matplotlib.pyplot as plt
 import numpy as np
@@ -8,6 +8,7 @@ from Preprocessor import preprocess
 from keras.models import model_from_json
 import shutil
 from keras import backend as K
+
 
 def pred_word(model_predict, path):
     img = preprocess(path)
@@ -43,18 +44,21 @@ if __name__=='__main__':
 	model_predict.load_weights('iam_words--15--1.791.h5')
 
 	test_img = 'test_img/1.png'
-	img = cv2.imread(test_img)
-	plt.imshow(img)
 	
 	img = prepareImg(cv2.imread(test_img), 64)
+	img2 = img.copy()
 	res = wordSegmentation(img, kernelSize=25, sigma=11, theta=7, minArea=100)
 	if not os.path.exists('tmp'):
 		os.mkdir('tmp')
 
 	for (j, w) in enumerate(res):
 		(wordBox, wordImg) = w
+		(x, y, w, h) = wordBox
 		cv2.imwrite('tmp/%d.png'%j, wordImg)
+		cv2.rectangle(img2,(x,y),(x+w,y+h),(0,255,0),1) # draw bounding box in summary image
 
+	cv2.imwrite('summary.png', img2)
+	plt.imshow(img2)
 	imgFiles = os.listdir('tmp')
 	imgFiles = sorted(imgFiles)
 	pred_line = []
@@ -63,5 +67,4 @@ if __name__=='__main__':
 	print('Predict: '+' '.join(pred_line))
 
 	plt.show()
-
 	shutil.rmtree('tmp')

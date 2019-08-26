@@ -4,7 +4,7 @@ from CRNN_Model import CRNN_model
 from keras.callbacks import ModelCheckpoint, EarlyStopping
 from keras.optimizers import Adam
 from sklearn.model_selection import train_test_split
-from Utilts import *
+from Utils import *
 
 
 def train(train_list, val_list):
