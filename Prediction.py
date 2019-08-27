@@ -45,7 +45,7 @@ if __name__=='__main__':
 	#plot_model(model_predict, to_file='model.png', show_shapes=True, show_layer_names=True)
 	model_predict.load_weights('iam_words--15--1.791.h5')
 
-	test_img = 'test_img/1.png'
+	test_img = 'test_img/2.png'
 	
 	img = prepareImg(cv2.imread(test_img), 64)
 	img2 = img.copy()

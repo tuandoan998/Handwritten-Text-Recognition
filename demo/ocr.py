@@ -30,6 +30,7 @@ def detect(model_predict, test_img):
 	locate = []
 	text = []
 	img = prepareImg(cv2.imread(test_img), 64)
+	img2 = img.copy()
 	res = wordSegmentation(img, kernelSize=25, sigma=11, theta=7, minArea=100)
 	if not os.path.exists('tmp'):
 		os.mkdir('tmp')
@@ -38,6 +39,9 @@ def detect(model_predict, test_img):
 		(x, y, w, h) = wordBox
 		cv2.imwrite('tmp/%d.png'%j, wordImg)
 		locate.append((x, y, w, h))
+		cv2.rectangle(img2,(x,y),(x+w,y+h),(0,255,0),1) # draw bounding box in summary image
+
+	cv2.imwrite('./static/summary.png', img2)
 	imgFiles = os.listdir('tmp')
 	imgFiles = sorted(imgFiles)
 	for f in imgFiles:
@@ -51,7 +55,7 @@ if __name__=='__main__':
 	with open('../model_predict.json', 'r') as f:
 		model_predict = model_from_json(f.read())
 	model_predict.load_weights('../iam_words--15--1.791.h5')
-	text, locate = detect(model_predict, '../test_img/1.png')
+	text, locate = detect(model_predict, '../test_img/2.png')
 	for i in range(len(text)):
 		print('Predict: ', text[i])
 		print('Locate: ', locate[i])

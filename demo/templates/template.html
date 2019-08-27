@@ -2,26 +2,34 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title>Flask Parent Template</title>
-    
-    <link rel="stylesheet" href="{{ url_for('static',    filename='css/template.css') }}">
-    
+    <title>demo</title>
+
+    <!-- <link rel="stylesheet" href="{{ url_for('static',    filename='css/template.css') }}"> -->
+    <style>
+    body {
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      line-height:1.5em;
+      color: #232323;
+      -webkit-font-smoothing: antialiased;
+      background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+    }
+    h1, h2, h3 {
+      font-family: Times, serif;
+      line-height:1.5em;
+      border-bottom: 1px solid #ccc;
+      color: navy;
+      margin-left: 20px;
+      margin: auto;
+      text-align: center;
+    }
+    </style>
+
 </head>
   <body>
-    <header>
-      <div class="container">
-        <h1 class="logo">First Web App</h1>
-        <strong><nav>
-          <ul class="menu">
-            <li><a href="{{ url_for('home') }}">Home</a></li>
-            <li><a href="{{ url_for('about') }}">About</a></li>
-          </ul>
-        </nav></strong>
-      </div>
-    </header>
-    
-{% block content %}
-{% endblock %}
-
+    <h1> OCR </h1>
+    <center>
+    <img stype="margin-left: auto; margin-right: auto;" src={{ summary_img }}>
+    <p style="text-align: center;"> <b>Predict</b>: {{ predict }} </p>
+    </center>
  </body>
 </html>

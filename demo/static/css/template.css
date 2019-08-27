@@ -1,0 +1,14 @@
+body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  line-height:1.5em;
+  color: #232323;
+  -webkit-font-smoothing: antialiased;
+  background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+}
+h1, h2, h3 {
+  font-family: Times, serif;
+  line-height:1.5em;
+  border-bottom: 1px solid #ccc;
+  color: navy;
+  margin-left: 20px;
+}
