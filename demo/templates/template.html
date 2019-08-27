@@ -13,23 +13,23 @@
       -webkit-font-smoothing: antialiased;
       background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
     }
-    h1, h2, h3 {
-      font-family: Times, serif;
-      line-height:1.5em;
-      border-bottom: 1px solid #ccc;
-      color: navy;
-      margin-left: 20px;
+    legend {
+      display: block;
+      padding-left: 2px;
+      padding-right: 2px;
+      border: none;
       margin: auto;
       text-align: center;
+      color: navy;
     }
     </style>
-
-</head>
+  </head>
   <body>
-    <h1> OCR </h1>
+    <legend">OCR</legend>
     <center>
-    <img stype="margin-left: auto; margin-right: auto;" src={{ summary_img }}>
-    <p style="text-align: center;"> <b>Predict</b>: {{ predict }} </p>
-    </center>
- </body>
+    <img src=" {{url_for('send_image', filename=image_name)}}" width="100%">
+    <p style="text-align: center;"> <b>Predict</b>: {{ predict }} </p> 
+
+    
+  </body>
 </html>
