@@ -2,6 +2,7 @@ from flask import Flask, request, render_template, send_from_directory
 from ocr import detect
 from keras.models import model_from_json
 import os
+from keras import backend as K
 
 app = Flask(__name__)
 UPLOAD_FOLDER = './static'
@@ -9,10 +10,11 @@ APP_ROOT = os.path.dirname(os.path.abspath(__file__))
 
 @app.route("/")
 def index():
-    return render_template("upload.html")
+    return render_template("template.html")
 
 @app.route("/upload", methods=["POST"])
-def upload():    
+def upload():
+    K.clear_session()
     with open('../Resource/model_predict.json', 'r') as f:
         model_predict = model_from_json(f.read())
     model_predict.load_weights('../Resource/iam_words--15--1.791.h5')
@@ -35,9 +37,8 @@ def upload():
         upload.save(destination)
 
     text, locate = detect(model_predict, destination)
+    K.clear_session()
     pred = ' '.join(text)
-
-    # return send_from_directory("images", filename, as_attachment=True)
     return render_template("template.html", predict=pred, image_name=filename)
 
 @app.route('/upload/<filename>')

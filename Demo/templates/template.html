@@ -1,35 +1,95 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title>demo</title>
+    <head>
+        <meta charset="utf-8">
+        <title>OCR</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        
+        <style>
+            body {
+              font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+              line-height: 2em;
+              color: #232323;
+              -webkit-font-smoothing: antialiased;
+              background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+            }
+            #footer {
+              position: fixed;
+              left: 0;
+              bottom: 0;
+              width: 100%;
+              background-color: #616161;
+              color: white;
+              text-align: center;
+              z-index: 10;
+            }
 
-    <!-- <link rel="stylesheet" href="{{ url_for('static',    filename='css/template.css') }}"> -->
-    <style>
-    body {
-      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-      line-height:1.5em;
-      color: #232323;
-      -webkit-font-smoothing: antialiased;
-      background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
-    }
-    legend {
-      display: block;
-      padding-left: 2px;
-      padding-right: 2px;
-      border: none;
-      margin: auto;
-      text-align: center;
-      color: navy;
-    }
-    </style>
-  </head>
-  <body>
-    <legend">OCR</legend>
-    <center>
-    <img src=" {{url_for('send_image', filename=image_name)}}" width="100%">
-    <p style="text-align: center;"> <b>Predict</b>: {{ predict }} </p> 
+            .space {
+              display: block;
+              height: 30px;
+            }
+        </style>
+    </head>
+    <body>
 
-    
-  </body>
+        <div class="jumbotron jumbotron-fluid">
+          <div class="container">
+            <h1 class="display-4 text-center">Handwritten OCR</h1>
+            <p class="lead text-center">Using for line text image =))))</p>
+          </div>
+        </div>
+
+        {% if predict %}
+        <div align="center">
+            <img src=" {{url_for('send_image', filename=image_name)}}"  class="img-fluid" width="80%">
+            <div class="space"></div>
+            <p style="text-align: center;"> <font size="6"> <b>Predict</b>: {{ predict }} </font></p>
+        </div>
+        {% endif %}
+
+       <!--  <form id="upload-form" action="upload" method="POST" enctype="multipart/form-data">
+            <strong>Upload an image:</strong><br>
+            <input id="file-picker" type="file" name="file" accept="image/*" multiple>
+            <div id="msg"></div>
+            <input type="submit" value="Upload!" id="upload-button">
+        </form> -->
+
+        <div class="container mb-3">
+        <form id="upload-form" action="upload" method="POST" enctype="multipart/form-data">
+            <div class="input-group">
+              <div class="custom-file">
+                <input type="file" class="custom-file-input" id="file-picker" name="file" accept="image/*" multiple>
+                <label class="custom-file-label" for="inputGroupFile04">Choose file</label>
+              </div>
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="submit" id="inputGroupFileAddon04">Upload</button>
+              </div>
+            </div>
+            <div class="space"></div>
+        </form>
+        </div>
+
+        <div class="mt-4" id="footer" style="bottom: 0">
+            <div class="container">
+                <marquee>Do the right thing!</marquee>
+            </div>
+        </div>
+    </body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script>
+        $("#file-picker").change(function(){
+            var input = document.getElementById('file-picker');
+            for (var i=0; i<input.files.length; i++){
+            //koala.jpg, koala.JPG substring(index) lastIndexOf('a') koala.1.jpg
+                var ext= input.files[i].name.substring(input.files[i].name.lastIndexOf('.')+1).toLowerCase()
+                if ((ext == 'jpg') || (ext == 'png')){
+                    $("#msg").text("Files are supported")
+                }
+                else{
+                    $("#msg").text("Files are NOT supported")
+                    document.getElementById("file-picker").value ="";
+                }
+            }
+        } );
+    </script>
 </html>
