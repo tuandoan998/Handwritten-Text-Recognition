@@ -11,9 +11,15 @@ Train on WORD unit of dataset.
 ## Result
 Test on IAM dataset:
 |            | Number of samples | CER(%) | WER(%) |
-|:---------- |:-----------------:|-------:|-------:|
+|:-----------|:-----------------:|-------:|-------:|
 | WORD unit  | 19289             | 10.75  | 27.46  |
 | LINE unit  | 2192              | 21.73  | 46.00  |
+
+| Tables        | Are           | Cool  |
+| ------------- |:-------------:| -----:|
+| col 3 is      | right-aligned | $1600 |
+| col 2 is      | centered      |   $12 |
+| zebra stripes | are neat      |    $1 |
 
 ## Main
 ### Preprocessing
