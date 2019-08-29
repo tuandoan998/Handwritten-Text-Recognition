@@ -40,7 +40,7 @@ $ python3 Train.py
 ```
 $ python3 Prediction.py
 ```
-![alt text](https://github.com/tuandoan998/OCR_IAM-dataset/blob/master/test_img/Screenshot.png)
+![alt text](https://github.com/tuandoan998/OCR_IAM-dataset/blob/master/Resource/test_img/Screenshot.png)
 
 ## References
 https://towardsdatascience.com/build-a-handwritten-text-recognition-system-using-tensorflow-2326a3487cd5
