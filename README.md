@@ -2,7 +2,7 @@
 This project refers to the handwritten recognition with CNN and RNN, decode with CTC.
 
 ## Dataset
-[IAM dataset](http://www.fki.inf.unibe.ch/databases/iam-handwriting-database/download-the-iam-handwriting-database)
+[IAM dataset](http://www.fki.inf.unibe.ch/databases/iam-handwriting-database/download-the-iam-handwriting-database)  
 Train on WORD unit of dataset.
 
 ## Model
@@ -10,7 +10,7 @@ Train on WORD unit of dataset.
 
 ## Result
 Test on IAM dataset:
-|            | Number of samples | CER(%) | WER(%) |
+|      a     | Number of samples | CER(%) | WER(%) |
 | :---       |     :---:         |  ---:  |  ---:  |
 | WORD unit  | 19289             | 10.75  | 27.46  |
 | LINE unit  | 2192              | 21.73  | 46.00  |
