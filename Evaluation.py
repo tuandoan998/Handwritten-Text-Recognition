@@ -6,6 +6,7 @@ from sklearn.model_selection import train_test_split
 import tensorflow as tf
 from keras import backend as K
 import editdistance
+from Spell import correction
 
 sess = tf.Session()
 K.set_session(sess)
@@ -45,6 +46,7 @@ if __name__=='__main__':
 		X_data = inp_value['the_input']
 		net_out_value = sess.run(net_out, feed_dict={net_inp:X_data})
 		pred_texts = decode_batch(net_out_value)
+
 		labels = inp_value['the_labels']
 		label_len = inp_value['label_length']
 		gt_texts = []

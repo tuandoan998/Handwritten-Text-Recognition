@@ -10,6 +10,7 @@ from keras import backend as K
 from Utils import *
 from WordSegmentation import wordSegmentation, prepareImg
 from Preprocessor import preprocess
+from Spell import correction_list
 
 
 def pred_word(model_predict, path):
@@ -47,7 +48,7 @@ def detect(model_predict, test_img):
 	for f in imgFiles:
 		text.append(pred_word(model_predict, 'tmp/'+f))
 	shutil.rmtree('tmp')
-
+	text = correction_list(text)
 	return text, locate
 
 

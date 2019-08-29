@@ -10,6 +10,7 @@ from keras import backend as K
 from Utils import *
 import shutil
 import re
+from Spell import correction_list
 
 pattern = '[' + r'\w' + ']+'
 def getWordIDStrings(s1, s2):
@@ -73,21 +74,21 @@ def pred_word(model_predict, path):
     return pred_texts
 
 def detect(model_predict, test_img):
-	img = prepareImg(cv2.imread(test_img), 64)
-	res = wordSegmentation(img, kernelSize=25, sigma=11, theta=7, minArea=100)
-	if not os.path.exists('tmp'):
-		os.mkdir('tmp')
-	for (j, w) in enumerate(res):
-		(wordBox, wordImg) = w
-		cv2.imwrite('tmp/%d.png'%j, wordImg)
-	imgFiles = os.listdir('tmp')
-	imgFiles = sorted(imgFiles)
-	text = []
-	for f in imgFiles:
-		text.append(pred_word(model_predict, 'tmp/'+f))
-	shutil.rmtree('tmp')
-
-	return (' '.join(text))
+    img = prepareImg(cv2.imread(test_img), 64)
+    res = wordSegmentation(img, kernelSize=25, sigma=11, theta=7, minArea=100)
+    if not os.path.exists('tmp'):
+        os.mkdir('tmp')
+    for (j, w) in enumerate(res):
+        (wordBox, wordImg) = w
+        cv2.imwrite('tmp/%d.png'%j, wordImg)
+    imgFiles = os.listdir('tmp')
+    imgFiles = sorted(imgFiles)
+    pred_line = []
+    for f in imgFiles:
+        pred_line.append(pred_word(model_predict, 'tmp/'+f))
+    shutil.rmtree('tmp')
+    pred_line = correction_list(pred_line)
+    return (' '.join(pred_line))
 
 if __name__=='__main__':
 	paths_and_texts = get_paths_and_texts()
@@ -106,8 +107,8 @@ if __name__=='__main__':
 	ed_chars = num_chars = ed_words = num_words = 0
 	for path, gt_text in paths_and_texts_test:
 		pred_text = detect(model_predict, path)
-		print('Ground truth: ', gt_text)
-		print('Pred: ', pred_text)
+		#print('Ground truth: ', gt_text)
+		#print('Pred: ', pred_text)
 		(idStrGt, idStrPred) = getWordIDStrings(gt_text, pred_text)
 		ed_words += editdistance.eval(idStrGt, idStrPred)
 		num_words += len(idStrGt)

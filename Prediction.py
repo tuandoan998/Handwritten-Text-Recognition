@@ -9,6 +9,7 @@ from keras.models import model_from_json
 import shutil
 from keras import backend as K
 from keras.utils import plot_model
+from Spell import correction_list
 
 
 def pred_word(model_predict, path):
@@ -39,13 +40,12 @@ if __name__=='__main__':
 	#model, model_predict = CRNN_model()
 	#with open('model_predict.json', 'w') as f:
 	#	f.write(model_predict.to_json())
-
 	with open('model_predict.json', 'r') as f:
 		model_predict = model_from_json(f.read())
 	#plot_model(model_predict, to_file='model.png', show_shapes=True, show_layer_names=True)
 	model_predict.load_weights('iam_words--15--1.791.h5')
 
-	test_img = 'test_img/2.png'
+	test_img = 'test_img/2.jpg'
 	
 	img = prepareImg(cv2.imread(test_img), 64)
 	img2 = img.copy()
@@ -67,6 +67,8 @@ if __name__=='__main__':
 	for f in imgFiles:
 		pred_line.append(pred_word(model_predict, 'tmp/'+f))
 	print('Predict: '+' '.join(pred_line))
+	pred_line = correction_list(pred_line)
+	print('Predict with spell: '+' '.join(pred_line))
 
 	plt.show()
 	shutil.rmtree('tmp')
