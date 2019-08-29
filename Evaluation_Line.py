@@ -100,9 +100,9 @@ if __name__=='__main__':
 	print('number of valid image: ', len(paths_and_texts_val))
 	print('number of test image: ', len(paths_and_texts_test))
 
-	with open('model_predict.json', 'r') as f:
+	with open('Resource/model_predict.json', 'r') as f:
 		model_predict = model_from_json(f.read())
-	model_predict.load_weights('iam_words--15--1.791.h5')
+	model_predict.load_weights('Resource/iam_words--15--1.791.h5')
 
 	ed_chars = num_chars = ed_words = num_words = 0
 	for path, gt_text in paths_and_texts_test:

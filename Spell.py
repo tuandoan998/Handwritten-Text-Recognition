@@ -3,8 +3,8 @@ from collections import Counter
 
 def words(text): return re.findall(r'\w+', text.lower())
 
-words_count = Counter(words(open('big.txt').read()))
-checked_word = words(open('wordlist_mono_clean.txt').read())
+words_count = Counter(words(open('Resource/big.txt').read()))
+checked_word = words(open('Resource/wordlist_mono_clean.txt').read())
 
 def P(word, N=sum(words_count.values())): 
     "Probability of `word`."

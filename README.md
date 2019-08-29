@@ -1,12 +1,14 @@
 # OCR
 This project refers to the handwritten recognition with CNN and RNN, decode with CTC.
 
+![alt text](https://github.com/tuandoan998/OCR_IAM-dataset/blob/master/Resouce/demol.png)
+
 ## Dataset
 [IAM dataset](http://www.fki.inf.unibe.ch/databases/iam-handwriting-database/download-the-iam-handwriting-database)  
 Train on WORD unit of dataset.
 
 ## Model
-![alt text](https://github.com/tuandoan998/OCR_IAM-dataset/blob/master/model.png)
+![alt text](https://github.com/tuandoan998/OCR_IAM-dataset/blob/master/Resource/model.png)
 
 ## Result
 Test on IAM dataset:
@@ -17,15 +19,17 @@ Test on IAM dataset:
 | LINE  | 2192              | 21.73  | 46.00  | 
 
 ## Main
+
 ### Preprocessing
+
 ### Train
+
 ### Postprocessing
+
 ### Evaluation
 
 
 ## Usage
-
-### Demo
 
 ### Train
 ```

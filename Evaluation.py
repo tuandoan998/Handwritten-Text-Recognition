@@ -25,7 +25,7 @@ if __name__=='__main__':
 	print('number of test image: ', len(paths_and_texts_test))
 
 	model, _ = CRNN_model()
-	model.load_weights('iam_words--15--1.791.h5')
+	model.load_weights('Resource/iam_words--15--1.791.h5')
 
 	test_set = TextImageGenerator(paths_and_texts_test, 128, 64, 8, 4)
 	test_set.build_data()

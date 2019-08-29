@@ -40,12 +40,12 @@ if __name__=='__main__':
 	#model, model_predict = CRNN_model()
 	#with open('model_predict.json', 'w') as f:
 	#	f.write(model_predict.to_json())
-	with open('model_predict.json', 'r') as f:
+	with open('Resource/model_predict.json', 'r') as f:
 		model_predict = model_from_json(f.read())
 	#plot_model(model_predict, to_file='model.png', show_shapes=True, show_layer_names=True)
-	model_predict.load_weights('iam_words--15--1.791.h5')
+	model_predict.load_weights('Resource/iam_words--15--1.791.h5')
 
-	test_img = 'test_img/2.jpg'
+	test_img = 'Resource/test_img/2.jpg'
 	
 	img = prepareImg(cv2.imread(test_img), 64)
 	img2 = img.copy()
@@ -59,7 +59,7 @@ if __name__=='__main__':
 		cv2.imwrite('tmp/%d.png'%j, wordImg)
 		cv2.rectangle(img2,(x,y),(x+w,y+h),(0,255,0),1) # draw bounding box in summary image
 
-	cv2.imwrite('summary.png', img2)
+	cv2.imwrite('Resource/summary.png', img2)
 	plt.imshow(img2)
 	imgFiles = os.listdir('tmp')
 	imgFiles = sorted(imgFiles)
