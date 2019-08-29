@@ -10,8 +10,8 @@ Train on WORD unit of dataset.
 
 ## Result
 Test on IAM dataset:
-|            | Number of samples | CER(%) | WER(%) |
-|:-----------|:-----------------:|:------:|-------:|
+|  Unit      | Number of samples | CER(%) | WER(%) |
+|------------|:-----------------:|:------:|-------:|
 | WORD unit  | 19289             | 10.75  | 27.46  |
 | LINE unit  | 2192              | 21.73  | 46.00  |
 
