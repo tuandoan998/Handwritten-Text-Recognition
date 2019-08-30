@@ -26,7 +26,7 @@ def pred_word(model_predict, path):
     pred_texts = decode_label(net_out_value)
     return pred_texts
 
-def detect(model_predict, test_img):
+def predict(model_predict, test_img):
 	res = []
 	locate = []
 	text = []
@@ -53,10 +53,10 @@ def detect(model_predict, test_img):
 
 
 if __name__=='__main__':
-	with open('../model_predict.json', 'r') as f:
+	with open('../Resource/model_predict.json', 'r') as f:
 		model_predict = model_from_json(f.read())
-	model_predict.load_weights('../iam_words--15--1.791.h5')
-	text, locate = detect(model_predict, '../test_img/2.png')
+	model_predict.load_weights('../Resource/iam_words--15--1.791.h5')
+	text, locate = predict(model_predict, '../Resource/test_img/2.png')
 	for i in range(len(text)):
 		print('Predict: ', text[i])
 		print('Locate: ', locate[i])

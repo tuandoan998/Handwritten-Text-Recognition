@@ -18,20 +18,12 @@ Test on IAM dataset:
 | WORD  | 19289             | 10.75  | 27.46  | 
 | LINE  | 2192              | 21.73  | 46.00  | 
 
-## Main
-
-### Preprocessing
-
-### Train
-
-### Postprocessing
-
-### Evaluation
-
+## Train
+[Google colab]
 
 ## Usage
 
-### Train
+### Training
 ```
 $ python3 Train.py
 ```
