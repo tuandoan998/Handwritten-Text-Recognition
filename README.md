@@ -1,7 +1,11 @@
 # OCR
 This project refers to the handwritten recognition with CNN and RNN, decode with CTC.
 
+<<<<<<< HEAD
 ![alt text](https://github.com/tuandoan998/OCR_IAM-dataset/blob/master/Resouce/demo.png)
+=======
+![alt text](https://github.com/tuandoan998/OCR_IAM-dataset/blob/master/Resource/demo.png)
+>>>>>>> 63517bc25b5c29384eeb19e792a2346122094e55
 
 ## Dataset
 [IAM dataset](http://www.fki.inf.unibe.ch/databases/iam-handwriting-database/download-the-iam-handwriting-database)  
@@ -40,7 +44,13 @@ $ python3 Train.py
 ```
 $ python3 Prediction.py
 ```
-![alt text](https://github.com/tuandoan998/OCR_IAM-dataset/blob/master/test_img/Screenshot.png)
+![alt text](https://github.com/tuandoan998/OCR_IAM-dataset/blob/master/Resource/test_img/Screenshot.png)
+
+### Evaluation
+```
+$ python3 Evaluation.py
+$ python3 Evaluation_Line.py
+```
 
 ## References
 https://towardsdatascience.com/build-a-handwritten-text-recognition-system-using-tensorflow-2326a3487cd5
