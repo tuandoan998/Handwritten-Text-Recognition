@@ -1,7 +1,7 @@
 # OCR
 This project refers to the handwritten recognition with CNN and RNN, decode with CTC.
 
-![demo](https://github.com/tuandoan998/OCR_IAM-dataset/blob/master/Resouce/demo.png)
+![demo](https://github.com/tuandoan998/OCR_IAM-dataset/blob/master/Resource/demo.png)
 
 ## Dataset
 [IAM dataset](http://www.fki.inf.unibe.ch/databases/iam-handwriting-database/download-the-iam-handwriting-database)  
