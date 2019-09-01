@@ -12,8 +12,12 @@ from keras.utils import plot_model
 from Spell import correction_list
 
 
-def pred_word(model_predict, path):
-    img = preprocess(path)
+def pred_word(model_predict, path, is_word):
+    if is_word:
+        width = 128
+    else:
+        width = 800
+    img = preprocess(path, width, 64)
     img = img.T
     if K.image_data_format() == 'channels_first':
         img = np.expand_dims(img, 0)
@@ -37,15 +41,17 @@ def pred_word(model_predict, path):
 
 
 if __name__=='__main__':
-	#model, model_predict = CRNN_model()
-	#with open('model_predict.json', 'w') as f:
-	#	f.write(model_predict.to_json())
-	with open('Resource/model_predict.json', 'r') as f:
-		model_predict = model_from_json(f.read())
-	#plot_model(model_predict, to_file='model.png', show_shapes=True, show_layer_names=True)
-	model_predict.load_weights('Resource/iam_words--15--1.791.h5')
-
-	test_img = 'Resource/test_img/2.jpg'
+	#l_model, l_model_predict = line_model()
+	#with open('line_model_predict.json', 'w') as f:
+	#	f.write(l_model_predict.to_json())
+	with open('Resource/line_model_predict.json', 'r') as f:
+		l_model_predict = model_from_json(f.read())
+	with open('Resource/word_model_predict.json', 'r') as f:
+		w_model_predict = model_from_json(f.read())
+	#plot_model(l_model_predict, to_file='line_model.png', show_shapes=True, show_layer_names=True)
+	w_model_predict.load_weights('Resource/iam_words--15--1.791.h5')
+	l_model_predict.load_weights('Resource/iam_lines--12--17.373.h5')
+	test_img = 'Resource/test_img/2.png'
 	
 	img = prepareImg(cv2.imread(test_img), 64)
 	img2 = img.copy()
@@ -65,10 +71,12 @@ if __name__=='__main__':
 	imgFiles = sorted(imgFiles)
 	pred_line = []
 	for f in imgFiles:
-		pred_line.append(pred_word(model_predict, 'tmp/'+f))
-	print('Predict: '+' '.join(pred_line))
+		pred_line.append(pred_word(w_model_predict, 'tmp/'+f, True))
+	print('-----------PREDICT-------------')
+	print('[Word model]: '+' '.join(pred_line))
 	pred_line = correction_list(pred_line)
-	print('Predict with spell: '+' '.join(pred_line))
-
+	print('[Word model with spell]: '+' '.join(pred_line))
 	plt.show()
 	shutil.rmtree('tmp')
+
+	print('[Line model]: ' + pred_word(l_model_predict, test_img, False))

@@ -24,25 +24,44 @@ def decode_batch(out):
         ret.append(outstr)
     return ret
 
-def get_paths_and_texts():
+def get_paths_and_texts(is_words):
     paths_and_texts = []
-    with open('../IAM_words/words.txt') as f:
-        for line in f:
-            if not line or line.startswith('#'):
-                continue
-            line_split = line.strip().split(' ')
-            assert len(line_split) >= 9
-            status = line_split[1]
-            if status == 'err':
-                continue
-
-            file_name_split = line_split[0].split('-')
-            label_dir = file_name_split[0]
-            sub_label_dir = '{}-{}'.format(file_name_split[0], file_name_split[1])
-            fn = '{}.png'.format(line_split[0])
-            img_path = os.path.join('../IAM_words/words', label_dir, sub_label_dir, fn)
-
-            gt_text = ' '.join(line_split[8:])
-
-            paths_and_texts.append([img_path, gt_text])
+    if is_words:
+        with open('../IAM_words/words.txt') as f:
+            for line in f:
+                if not line or line.startswith('#'):
+                    continue
+                line_split = line.strip().split(' ')
+                assert len(line_split) >= 9
+                status = line_split[1]
+                if status == 'err':
+                    continue
+                file_name_split = line_split[0].split('-')
+                label_dir = file_name_split[0]
+                sub_label_dir = '{}-{}'.format(file_name_split[0], file_name_split[1])
+                fn = '{}.png'.format(line_split[0])
+                img_path = os.path.join('../IAM_words/words', label_dir, sub_label_dir, fn)
+                gt_text = ' '.join(line_split[8:])
+                paths_and_texts.append([img_path, gt_text])
+    else:
+        with open('../IAM_lines/lines.txt') as f:
+            for line in f:
+                if not line or line.startswith('#'):
+                    continue
+                line_split = line.strip().split(' ')
+                assert len(line_split) >= 9
+                status = line_split[1]
+                if status == 'err':
+                    continue
+                file_name_split = line_split[0].split('-')
+                label_dir = file_name_split[0]
+                sub_label_dir = '{}-{}'.format(file_name_split[0], file_name_split[1])
+                fn = '{}.png'.format(line_split[0])
+                img_path = os.path.join('../IAM_lines/lines', label_dir, sub_label_dir, fn)
+                gt_text = ' '.join(line_split[8:])
+                gt_text = gt_text.replace('|', ' ')
+                l = len(gt_text)
+                if l<10 or l>74:
+                    continue
+                paths_and_texts.append([img_path, gt_text])
     return paths_and_texts

@@ -17,16 +17,16 @@ class TextImageGenerator:
                  img_w,
                  img_h, 
                  batch_size, 
-                 downsample_factor,
-                 max_text_len=max_text_len):
+                 i_len,
+                 max_text_len):
         
         self.img_h = img_h
         self.img_w = img_w
         self.batch_size = batch_size
         self.max_text_len = max_text_len
-        self.downsample_factor = downsample_factor
         self.samples = data
         self.n = len(self.samples)
+        self.i_len = i_len
         self.indexes = list(range(self.n))
         self.cur_index = 0
         
@@ -34,7 +34,7 @@ class TextImageGenerator:
         self.imgs = np.zeros((self.n, self.img_h, self.img_w))
         self.texts = []
         for i, (img_filepath, text) in enumerate(self.samples):
-            img = preprocess(img_filepath)
+            img = preprocess(img_filepath, self.img_w, self.img_h)
             self.imgs[i, :, :] = img
             self.texts.append(text)
     
@@ -54,7 +54,7 @@ class TextImageGenerator:
             else:
                 X_data = np.ones([self.batch_size, self.img_w, self.img_h, 1])
             Y_data = np.zeros([self.batch_size, self.max_text_len])
-            input_length = np.ones((self.batch_size, 1)) * 30
+            input_length = np.ones((self.batch_size, 1)) * self.i_len
             label_length = np.zeros((self.batch_size, 1))
                                    
             for i in range(self.batch_size):
