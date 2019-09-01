@@ -12,51 +12,35 @@ from WordSegmentation import wordSegmentation, prepareImg
 from Preprocessor import preprocess
 from Spell import correction_list
 
-
-def pred_word(model_predict, path):
-    img = preprocess(path)
-    img = img.T
-    if K.image_data_format() == 'channels_first':
-        img = np.expand_dims(img, 0)
-    else:
-        img = np.expand_dims(img, -1)
-    img = np.expand_dims(img, 0)
-
-    net_out_value = model_predict.predict(img)
-    pred_texts = decode_label(net_out_value)
-    return pred_texts
-
-def predict(model_predict, test_img):
+def predict(w_model_predict, l_model_predict, test_img):
 	res = []
-	locate = []
 	text = []
 	img = prepareImg(cv2.imread(test_img), 64)
-	#img2 = img.copy()
 	res = wordSegmentation(img, kernelSize=25, sigma=11, theta=7, minArea=100)
 	if not os.path.exists('tmp'):
 		os.mkdir('tmp')
 	for (j, w) in enumerate(res):
 		(wordBox, wordImg) = w
-		(x, y, w, h) = wordBox
 		cv2.imwrite('tmp/%d.png'%j, wordImg)
-		locate.append((x, y, w, h))
-		#cv2.rectangle(img2,(x,y),(x+w,y+h),(0,255,0),1) # draw bounding box in summary image
-
-	#cv2.imwrite('./static/summary.png', img2)
 	imgFiles = os.listdir('tmp')
 	imgFiles = sorted(imgFiles)
 	for f in imgFiles:
-		text.append(pred_word(model_predict, 'tmp/'+f))
+		text.append(predict_image(w_model_predict, 'tmp/'+f, is_word=True))
 	shutil.rmtree('tmp')
 	text = correction_list(text)
-	return text, locate
+	text1 = ' '.join(text)
+	text2 = predict_image(l_model_predict, test_img, is_word=False)
+	return text1, text2
 
 
 if __name__=='__main__':
-	with open('../Resource/model_predict.json', 'r') as f:
-		model_predict = model_from_json(f.read())
-	model_predict.load_weights('../Resource/iam_words--15--1.791.h5')
-	text, locate = predict(model_predict, '../Resource/test_img/2.png')
-	for i in range(len(text)):
-		print('Predict: ', text[i])
-		print('Locate: ', locate[i])
+	with open('../Resource/line_model_predict.json', 'r') as f:
+		l_model_predict = model_from_json(f.read())
+	with open('../Resource/word_model_predict.json', 'r') as f:
+		w_model_predict = model_from_json(f.read())
+	w_model_predict.load_weights('../Resource/iam_words--15--1.791.h5')
+	l_model_predict.load_weights('../Resource/iam_lines--12--17.373.h5')
+	text1, text2 = predict(w_model_predict, l_model_predict, '../Resource/test_img/2.png')
+	print('--------------PREDICT---------------')
+	print('[Word model]: ', text1)
+	print('[Line model]: ', text2)

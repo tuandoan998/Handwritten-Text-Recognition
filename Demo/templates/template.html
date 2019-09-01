@@ -28,6 +28,10 @@
               display: block;
               height: 30px;
             }
+            table {
+              table-layout: fixed;
+              word-wrap: break-word;
+            }
         </style>
     </head>
     <body>
@@ -39,20 +43,29 @@
           </div>
         </div>
 
-        {% if predict %}
+        {% if predict1 %}
         <div align="center">
-            <img src=" {{url_for('send_image', filename=image_name)}}"  class="img-fluid" width="80%">
-            <div class="space"></div>
-            <p style="text-align: center;"> <font size="6"> <b>Predict</b>: {{ predict }} </font></p>
+          <img src=" {{url_for('send_image', filename=image_name)}}"  class="img-fluid" width="80%">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Model</th>
+                <th scope="col">Predict</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">WORD</th>
+                <td>{{predict1}}</td>
+              </tr>
+              <tr>
+                <th scope="row">LINE</th>
+                <td>{{predict2}}</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
         {% endif %}
-
-       <!--  <form id="upload-form" action="upload" method="POST" enctype="multipart/form-data">
-            <strong>Upload an image:</strong><br>
-            <input id="file-picker" type="file" name="file" accept="image/*" multiple>
-            <div id="msg"></div>
-            <input type="submit" value="Upload!" id="upload-button">
-        </form> -->
 
         <div class="container mb-3">
         <form id="upload-form" action="upload" method="POST" enctype="multipart/form-data">
