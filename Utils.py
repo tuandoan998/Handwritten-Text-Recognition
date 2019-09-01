@@ -2,6 +2,8 @@ import os
 import numpy as np
 import itertools
 from Parameter import *
+from Preprocessor import preprocess
+from keras import backend as K
 
 def decode_label(out):
     out_best = list(np.argmax(out[0, 2:], 1))
@@ -65,3 +67,20 @@ def get_paths_and_texts(is_words):
                     continue
                 paths_and_texts.append([img_path, gt_text])
     return paths_and_texts
+
+def predict_image(model_predict, path, is_word):
+    if is_word:
+        width = 128
+    else:
+        width = 800
+    img = preprocess(path, width, 64)
+    img = img.T
+    if K.image_data_format() == 'channels_first':
+        img = np.expand_dims(img, 0)
+    else:
+        img = np.expand_dims(img, -1)
+    img = np.expand_dims(img, 0)
+
+    net_out_value = model_predict.predict(img)
+    pred_texts = decode_label(net_out_value)
+    return pred_texts

@@ -12,34 +12,6 @@ from keras.utils import plot_model
 from Spell import correction_list
 
 
-def pred_word(model_predict, path, is_word):
-    if is_word:
-        width = 128
-    else:
-        width = 800
-    img = preprocess(path, width, 64)
-    img = img.T
-    if K.image_data_format() == 'channels_first':
-        img = np.expand_dims(img, 0)
-    else:
-        img = np.expand_dims(img, -1)
-    img = np.expand_dims(img, 0)
-
-    net_out_value = model_predict.predict(img)
-    pred_texts = decode_label(net_out_value)
-    return pred_texts
-'''
-    fig=plt.figure()
-    fig.add_subplot(2,1,1)
-    test_img=cv2.imread(path)
-    plt.imshow(test_img)
-    fig.add_subplot(2,1,2)
-    plt.imshow(net_out_value.T.squeeze(), cmap='binary', interpolation='nearest')
-    plt.yticks(list(range(len(letters) + 1)), letters + ['blank'])
-    plt.show()
-'''
-
-
 if __name__=='__main__':
 	#l_model, l_model_predict = line_model()
 	#with open('line_model_predict.json', 'w') as f:
@@ -71,12 +43,13 @@ if __name__=='__main__':
 	imgFiles = sorted(imgFiles)
 	pred_line = []
 	for f in imgFiles:
-		pred_line.append(pred_word(w_model_predict, 'tmp/'+f, True))
+		pred_line.append(predict_image(w_model_predict, 'tmp/'+f, True))
 	print('-----------PREDICT-------------')
 	print('[Word model]: '+' '.join(pred_line))
 	pred_line = correction_list(pred_line)
 	print('[Word model with spell]: '+' '.join(pred_line))
+	
+	print('[Line model]: ' + predict_image(l_model_predict, test_img, False))
+
 	plt.show()
 	shutil.rmtree('tmp')
-
-	print('[Line model]: ' + pred_word(l_model_predict, test_img, False))

@@ -30,23 +30,6 @@ def getWordIDStrings(s1, s2):
 		idStr2.append(allWords.index(w))
 	return (idStr1, idStr2)
 
-def pred_word(model_predict, path, is_word):
-	if is_word:
-		width = 128
-	else:
-		width = 800
-	img = preprocess(path, width, 64)
-	img = img.T
-	if K.image_data_format() == 'channels_first':
-		img = np.expand_dims(img, 0)
-	else:
-		img = np.expand_dims(img, -1)
-	img = np.expand_dims(img, 0)
-
-	net_out_value = model_predict.predict(img)
-	pred_texts = decode_label(net_out_value)
-	return pred_texts
-
 def detect_word_model(model_predict, test_img):
 	img = prepareImg(cv2.imread(test_img), 64)
 	res = wordSegmentation(img, kernelSize=25, sigma=11, theta=7, minArea=100)
@@ -59,7 +42,7 @@ def detect_word_model(model_predict, test_img):
 	imgFiles = sorted(imgFiles)
 	pred_line = []
 	for f in imgFiles:
-		pred_line.append(pred_word(model_predict, 'tmp/'+f, True))
+		pred_line.append(predict_image(model_predict, 'tmp/'+f, True))
 	shutil.rmtree('tmp')
 	pred_line = correction_list(pred_line)
 	return (' '.join(pred_line))
@@ -84,7 +67,7 @@ if __name__=='__main__':
 	ed_chars = num_chars = ed_words = num_words = 0
 	for path, gt_text in paths_and_texts_test:
 		#pred_text = detect(model_predict, path)
-		pred_text = pred_word(model_predict, path, False)
+		pred_text = predict_image(model_predict, path, False)
 		(idStrGt, idStrPred) = getWordIDStrings(gt_text, pred_text)
 		ed_words += editdistance.eval(idStrGt, idStrPred)
 		num_words += len(idStrGt)
@@ -92,7 +75,3 @@ if __name__=='__main__':
 		num_chars += len(gt_text)
 	print('CER: ', ed_chars / num_chars)
 	print('WER: ', ed_words / num_words)
-
-	#CER:  0.2213816171272409
-	#WER:  0.4667540514775977
-
