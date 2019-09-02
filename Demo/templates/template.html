@@ -46,6 +46,7 @@
         {% if predict1 %}
         <div align="center">
           <img src=" {{url_for('send_image', filename=image_name)}}"  class="img-fluid" width="80%">
+          <div class="container mt-3">
           <table class="table">
             <thead>
               <tr>
@@ -55,15 +56,16 @@
             </thead>
             <tbody>
               <tr>
-                <th scope="row">WORD</th>
+                <td>WORD</th>
                 <td>{{predict1}}</td>
               </tr>
               <tr>
-                <th scope="row">LINE</th>
+                <td>LINE</th>
                 <td>{{predict2}}</td>
               </tr>
             </tbody>
           </table>
+        </div>
         </div>
         {% endif %}
 
