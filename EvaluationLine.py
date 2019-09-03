@@ -67,7 +67,8 @@ if __name__=='__main__':
 	ed_chars = num_chars = ed_words = num_words = 0
 	for path, gt_text in paths_and_texts_test:
 		#pred_text = detect(model_predict, path)
-		pred_text = predict_image(model_predict, path, False)
+		#pred_text = predict_image(model_predict, path, False)
+		pred_text = predict_image(model_predict, path)
 		(idStrGt, idStrPred) = getWordIDStrings(gt_text, pred_text)
 		ed_words += editdistance.eval(idStrGt, idStrPred)
 		num_words += len(idStrGt)

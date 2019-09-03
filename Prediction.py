@@ -23,7 +23,7 @@ if __name__=='__main__':
 	#plot_model(l_model_predict, to_file='line_model.png', show_shapes=True, show_layer_names=True)
 	w_model_predict.load_weights('Resource/iam_words--15--1.791.h5')
 	l_model_predict.load_weights('Resource/iam_lines--12--17.373.h5')
-	test_img = 'Resource/test_img/2.png'
+	test_img = 'Resource/test_img/4.png'
 	
 	img = prepareImg(cv2.imread(test_img), 64)
 	img2 = img.copy()

@@ -5,6 +5,7 @@ from Parameter import *
 from Preprocessor import preprocess
 from keras import backend as K
 
+
 def decode_label(out):
     out_best = list(np.argmax(out[0, 2:], 1))
     out_best = [k for k, g in itertools.groupby(out_best)]

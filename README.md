@@ -18,7 +18,7 @@ Test on IAM dataset:
 |  LINE   | LINE      | 2192              | 08.32  | 28.99  | 
 
 ## Train
-[Google colab]=
+[Google colab]
 
 ## Usage
 

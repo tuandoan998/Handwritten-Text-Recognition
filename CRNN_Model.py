@@ -156,8 +156,6 @@ def line_model():
     inner = Dense(80, kernel_initializer='he_normal',name='dense2')(gru2_merged) #(None, 100, 80)
     y_pred = Activation('softmax', name='softmax')(inner)
 
-    Model(inputs=input_data, outputs=y_pred).summary()
-
     labels = Input(name='the_labels', shape=[max_text_len], dtype='float32')
     input_length = Input(name='input_length', shape=[1], dtype='int64')
     label_length = Input(name='label_length', shape=[1], dtype='int64')
