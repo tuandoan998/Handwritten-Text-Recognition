@@ -13,11 +13,13 @@ def train(train_list, val_list, is_word_model):
         model, _ = word_model()
         model_name = 'iam_words'
         max_text_len = 16
+        img_w = 128
     else:
         input_length = 100 - 2
         model, _ = line_model()
         model_name = 'iam_line'
         max_text_len = 74
+        img_w = 800
 
     batch_size = 32
     train_set = TextImageGenerator(train_list, img_w, img_h, batch_size, input_length, max_text_len)
@@ -52,7 +54,7 @@ def train(train_list, val_list, is_word_model):
     return model
 
 if __name__=='__main__':
-    paths_and_texts = get_paths_and_texts()
+    paths_and_texts = get_paths_and_texts(is_words=True)
     print('number of image: ', len(paths_and_texts))
 
     paths_and_texts_train, paths_and_texts_test = train_test_split(paths_and_texts, test_size=0.4, random_state=1707)
