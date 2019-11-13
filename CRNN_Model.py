@@ -14,8 +14,9 @@ def ctc_lambda_func(args):
     return K.ctc_batch_cost(labels, y_pred, input_length, label_length)
 
 def word_model():
-    img_w = 128
-    max_text_len = 16
+    img_w = word_cfg['img_w']
+    img_h = word_cfg['img_h']
+    max_text_len = word_cfg['max_text_len']
     if K.image_data_format() == 'channels_first':
         input_shape = (1, img_w, img_h)
     else:
@@ -96,8 +97,9 @@ def word_model():
 
 
 def line_model():
-    img_w = 800
-    max_text_len = 74
+    img_w = line_cfg['img_w']
+    img_h = line_cfg['img_h']
+    max_text_len = line_cfg['max_text_len']
     if K.image_data_format() == 'channels_first':
         input_shape = (1, img_w, img_h)
     else:

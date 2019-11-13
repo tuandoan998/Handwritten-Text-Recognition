@@ -12,6 +12,7 @@ from Utils import *
 import shutil
 import re
 from Spell import correction_list
+from ImageGenerator import TextImageGenerator
 
 pattern = '[' + r'\w' + ']+'
 def getWordIDStrings(s1, s2):
@@ -64,15 +65,39 @@ if __name__=='__main__':
 		model_predict = model_from_json(f.read())
 	model_predict.load_weights('Resource/iam_lines--12--17.373.h5')
 
+	batch_size = line_cfg['batch_size']
+	test_set = TextImageGenerator(paths_and_texts_test, line_cfg['img_w'], line_cfg['img_h'], batch_size, line_cfg['input_length'], line_cfg['max_text_len'])
+	print('Loading data for evaluation ...')
+	test_set.build_data()
+	print('Done')
+	print("Number test set: ", test_set.n)
+
 	ed_chars = num_chars = ed_words = num_words = 0
-	for path, gt_text in paths_and_texts_test:
-		#pred_text = detect(model_predict, path)
-		#pred_text = predict_image(model_predict, path, False)
-		pred_text = predict_image(model_predict, path)
-		(idStrGt, idStrPred) = getWordIDStrings(gt_text, pred_text)
-		ed_words += editdistance.eval(idStrGt, idStrPred)
-		num_words += len(idStrGt)
-		ed_chars += editdistance.eval(gt_text, pred_text)
-		num_chars += len(gt_text)
+	batch = 0
+	num_batch = int(test_set.n/batch_size)
+	for inp_value, _ in test_set.next_batch():
+		if batch>=num_batch:
+			break
+		print('batch: %s/%s' % (batch, str(num_batch)))
+
+		labels = inp_value['the_labels']
+		label_len = inp_value['label_length']
+		g_texts = []
+		for label in labels:
+			g_text = ''.join(list(map(lambda x: letters[int(x)], label)))
+			g_texts.append(g_text)
+		pred_texts = decode_batch(model_predict.predict(inp_value))
+
+		for i in range(batch_size):
+			g_texts[i] = g_texts[i][:int(inp_value['label_length'].item(i))]
+			ed_chars += editdistance.eval(g_texts[i], pred_texts[i])
+			num_chars += len(g_texts[i])
+			(idStrGt, idStrPred) = getWordIDStrings(g_texts[i], pred_texts[i])
+			ed_words += editdistance.eval(idStrGt, idStrPred)
+			num_words += len(idStrGt)
+
+		print('ED chars: ', ed_chars)
+		print('ED words: ', ed_words)
+		batch += 1
 	print('CER: ', ed_chars / num_chars)
 	print('WER: ', ed_words / num_words)

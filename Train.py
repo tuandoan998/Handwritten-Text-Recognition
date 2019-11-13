@@ -9,19 +9,18 @@ from Utils import *
 
 def train(train_list, val_list, is_word_model):
     if is_word_model:
-        input_length = 32 - 2
         model, _ = word_model()
-        model_name = 'iam_words'
-        max_text_len = 16
-        img_w = 128
+        cfg = word_cfg
     else:
-        input_length = 100 - 2
         model, _ = line_model()
-        model_name = 'iam_line'
-        max_text_len = 74
-        img_w = 800
+        cfg = line_cfg
 
-    batch_size = 32
+    input_length = cfg['input_length']
+    model_name = cfg['model_name']
+    max_text_len = cfg['max_text_len']
+    img_w = cfg['img_w']
+    img_h = cfg['img_h']
+    batch_size = cfg['batch_size']
     train_set = TextImageGenerator(train_list, img_w, img_h, batch_size, input_length, max_text_len)
     print('Loading data for train ...')
     train_set.build_data()
@@ -29,10 +28,8 @@ def train(train_list, val_list, is_word_model):
     val_set.build_data()
     print('Done')
     
-    no_train_set = train_set.n
-    no_val_set = val_set.n
-    print("Number train set: ", no_train_set)
-    print("Number val set: ", no_val_set)
+    print("Number train set: ", train_set.n)
+    print("Number val set: ", val_set.n)
     
     model.compile(loss={'ctc': lambda y_true, y_pred: y_pred}, optimizer='adam')
 
@@ -45,10 +42,10 @@ def train(train_list, val_list, is_word_model):
     )
 
     model.fit_generator(generator=train_set.next_batch(),
-                        steps_per_epoch=no_train_set // batch_size,
+                        steps_per_epoch=train_set.n // batch_size,
                         epochs=32,
                         validation_data=val_set.next_batch(),
-                        validation_steps=no_val_set // batch_size,
+                        validation_steps=val_set.n // batch_size,
                         callbacks=[ckp, earlystop])
 
     return model

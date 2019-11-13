@@ -71,9 +71,9 @@ def get_paths_and_texts(is_words):
 
 def predict_image(model_predict, path, is_word):
     if is_word:
-        width = 128
+        width = word_cfg['img_w']
     else:
-        width = 800
+        width = line_cfg['img_w']
     img = preprocess(path, width, 64)
     img = img.T
     if K.image_data_format() == 'channels_first':
