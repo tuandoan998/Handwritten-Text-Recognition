@@ -8,15 +8,18 @@ This project refers to the handwritten recognition with CNN and RNN, decode with
 [IAM dataset](http://www.fki.inf.unibe.ch/databases/iam-handwriting-database/download-the-iam-handwriting-database)  
 * [Model1 - word_model.png] Train on WORD unit of dataset.
 * [Model2 - line_model.png] Train on LINE unit of dataset.
+* Split data:
+https://www.openslr.org/56/
+https://drive.google.com/drive/u/0/folders/1xqek060j9_zVWGY80m33qSCrZf3scqUy
 
 ## Result
 Test on IAM dataset:
 
-|  Model  | Test Unit | Number of samples | CER(%) | WER(%) | 
-| :-      | :-        |     :---:         |  ---:  |  ---:  |
-|  WORD   | WORD      | 19289             | 10.39  | 26.97  | 
-|  WORD   | LINE      | 2192              | 21.73  | 46.00  | 
-|  LINE   | LINE      | 2192              | 08.32  | 28.99  | 
+|  Model  | Test Unit | CER(%) | WER(%) | 
+| :-      | :-        |  ---:  |  ---:  |
+|  WORD   | WORD      | 17.20  | 37.78  | 
+|  WORD   | LINE      | ?????  | ?????  | 
+|  LINE   | LINE      | ?????  | ?????  | 
 
 ## Train
 [Google colab]

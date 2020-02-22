@@ -27,25 +27,37 @@ def decode_batch(out):
         ret.append(outstr)
     return ret
 
-def get_paths_and_texts(is_words):
+def get_paths_and_texts(partition_split_file, is_words):
     paths_and_texts = []
+    
+    with open (partition_split_file) as f:
+            partition_folder = f.readlines()
+    partition_folder = [x.strip() for x in partition_folder]
+    
     if is_words:
-        with open('../IAM_words/words.txt') as f:
+        with open ('data/IAM/words.txt') as f:
             for line in f:
-                if not line or line.startswith('#'):
+                if not line or line.startswith('#'): # comment in txt file
                     continue
                 line_split = line.strip().split(' ')
                 assert len(line_split) >= 9
                 status = line_split[1]
-                if status == 'err':
+                if status == 'err': # er: segmentation of word can be bad
                     continue
+
                 file_name_split = line_split[0].split('-')
                 label_dir = file_name_split[0]
                 sub_label_dir = '{}-{}'.format(file_name_split[0], file_name_split[1])
                 fn = '{}.png'.format(line_split[0])
-                img_path = os.path.join('../IAM_words/words', label_dir, sub_label_dir, fn)
+                img_path = os.path.join('data/IAM/words', label_dir, sub_label_dir, fn)
+
                 gt_text = ' '.join(line_split[8:])
-                paths_and_texts.append([img_path, gt_text])
+                if len(gt_text)>16:
+                    continue
+
+                if sub_label_dir in partition_folder:
+                    paths_and_texts.append([img_path, gt_text])
+        
     else:
         with open('../IAM_lines/lines.txt') as f:
             for line in f:

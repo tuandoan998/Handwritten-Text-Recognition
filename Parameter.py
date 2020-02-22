@@ -3,7 +3,7 @@ letters = [' ', '!', '"', '#', '&', "'", '(', ')', '*', '+', ',', '-', '.', '/',
 num_classes = len(letters) + 1
 
 word_cfg = {
-	'batch_size': 128,
+	'batch_size': 64,
 	'input_length': 30,
 	'model_name': 'iam_words',
 	'max_text_len': 16,
