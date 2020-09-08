@@ -18,8 +18,6 @@ Test on IAM dataset:
 |  Model  | Test Unit | CER(%) | WER(%) | 
 | :-      | :-        |  ---:  |  ---:  |
 |  WORD   | WORD      | 17.20  | 37.78  | 
-|  WORD   | LINE      | ?????  | ?????  | 
-|  LINE   | LINE      | ?????  | ?????  | 
 
 ## Train
 [Google colab]
