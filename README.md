@@ -4,6 +4,9 @@ This project refers to the handwritten recognition with CNN and RNN, decode with
 ![demo](https://github.com/tuandoan998/OCR_IAM-dataset/blob/master/Resource/demo.png)
 [Demo on youtube](https://youtu.be/kILhJXcR7To)
 
+# Update
+This [repo](https://github.com/tuandoan998/vietnamese-htr) has better model and higher accuracy 
+
 ## Dataset
 [IAM dataset](http://www.fki.inf.unibe.ch/databases/iam-handwriting-database/download-the-iam-handwriting-database)  
 * [Model1 - word_model.png] Train on WORD unit of dataset.
