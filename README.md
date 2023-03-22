@@ -13,7 +13,6 @@ This [repo](https://github.com/tuandoan998/vietnamese-htr) has better model and 
 * [Model2 - line_model.png] Train on LINE unit of dataset.
 * Split data:
 https://www.openslr.org/56/
-https://drive.google.com/drive/u/0/folders/1xqek060j9_zVWGY80m33qSCrZf3scqUy
 
 ## Result
 Test on IAM dataset:
